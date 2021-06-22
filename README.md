@@ -1,7 +1,5 @@
 # Intro
 
-[깃허브](https://github.com/inceptionJh/tenel-kakao-map) | [버그 리포트](https://github.com/inceptionJh/tenel-kakao-map/issues)
-
 카카오맵 타입 정의 라이브러리
 
 - 동적 로드하는 경우를 위해서 전역이 아닌 import 해서 사용할 수 있도록 구성
@@ -9,7 +7,7 @@
 # Installation
 
 ```bash
-$ npm install tenel-kakao-map
+$ npm install sharekim-kakao-map-types
 ```
 
 
@@ -24,7 +22,7 @@ $ npm install tenel-kakao-map
         // global.d.ts
 
         /** tsconfig.json의 include에 global.d.ts가 포함되어야함. */
-        import { IKakao } from "tenel-kakao-map";
+        import { IKakao } from "sharekim-kakao-map-types";
 
         declare global {
             var kakao: IKakao;
