@@ -1,5 +1,5 @@
 {
-  "name": "sharekim-kakao-map",
+  "name": "sharekim-kakao-map-types",
   "version": "0.0.2",
   "description": "kakao-map with typescript",
   "main": "build/index.js",
