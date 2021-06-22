@@ -28,6 +28,7 @@ export interface IKakaoMaps {
   Circle: new (options?: IKakaoCircleOptions) => IKakaoCircle;
   Rectangle: new (options?: IKakaoRectangleOptions) => IKakaoRectangle;
   Ellipse: new (options?: IKakaoEllipseOptions) => IKakaoEllipse;
+  // MarkerClusterer: new (options?: ) => IKakaoEllipse;
   event: IKakaoEvent;
   drawing: IKakaoDrawing;
   services: IKakaoServices;
@@ -1172,6 +1173,21 @@ export interface IKakaoEllipse {
   setZIndex: (zIndex: number) => void;
   getZIndex: () => number;
 }
+
+// export interface IKakaoMarkerClustererOptions {
+//   map: IKakaoMap | IKakaoRoadview;
+//   markers: number;
+//   gridSize?: number;
+//   averageCenter?: number;
+//   minLevel?: number;
+//   minClusterSize?: number;
+//   styles?: String[];
+//   texts?: String[];
+//   calculator?: number[];
+//   disableClickZoom?: boolean;
+//   clickable?: boolean;
+//   hoverable?: boolean;
+// }
 
 export interface IKakaoEllipseOptions {
   center?: IKakaoLatLng;
