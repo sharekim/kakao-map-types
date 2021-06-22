@@ -70,13 +70,13 @@ export interface IKakaoMaps {
 }
 
 export interface IKakaoMarkerClustererOptions {
-  map: IKakaoMap;
-  markers: IKakaoMarker[];
-  gridSize: number;
+  map?: IKakaoMap;
+  markers?: IKakaoMarker[];
+  gridSize?: number;
   averageCenter: false;
   minLevel: number;
-  disableClickZoom: false;
-  styles: IKakaoMarkerClustererStyle[];
+  disableClickZoom?: false;
+  styles?: IKakaoMarkerClustererStyle[];
 }
 export interface IKakaoMarkerClustererStyle {
   width?: string;
