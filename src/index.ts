@@ -73,9 +73,9 @@ export interface IKakaoMarkerClustererOptions {
   map?: IKakaoMap;
   markers?: IKakaoMarker[];
   gridSize?: number;
-  averageCenter: false;
-  minLevel: number;
-  disableClickZoom?: false;
+  averageCenter?: boolean;
+  minLevel?: number;
+  disableClickZoom?: boolean;
   styles?: IKakaoMarkerClustererStyle[];
 }
 export interface IKakaoMarkerClustererStyle {
