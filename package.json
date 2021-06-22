@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "browser": "./build/index.js",
   "scripts": {
-    "test": "parcel _test/index.html --open"
+    "test": "parcel _test/index.html --open",
+    "publish": "tsc --build && npm publish"
   },
   "keywords": [
     "tenel",
