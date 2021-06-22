@@ -3,7 +3,12 @@ export interface IKakao {
 }
 
 export interface IKakaoMaps {
-  Viewpoint: new (pan: number, tilt: number, zoom: number, panaId?: number) => IKakaoViewpoint;
+  Viewpoint: new (
+    pan: number,
+    tilt: number,
+    zoom: number,
+    panaId?: number
+  ) => IKakaoViewpoint;
   LatLng: new (latitude: number, longitude: number) => IKakaoLatLng;
   LatLngBounds: IKakaoLatLngBoundsConstructor;
   Coords: new (x: number, y: number) => IKakaoCoords;
@@ -11,30 +16,86 @@ export interface IKakaoMaps {
   Size: new (width: number, height: number) => IKakaoSize;
   MapTypeControl: new () => IKakaoMapTypeControl;
   ZoomControl: new () => IKakaoMapZoomControl;
-  Tileset: new (width: number, height: number, urlFunc: (x: number, y: number, z: number) => string, copyright?: IKakaoTilesetCopyright[], dark?: boolean, minZoom?: number, maxZoom?: number, getTile?: (x: number, y: number, z: number) => string) => IKakaoTileset;
-  TilesetCopyright: new (msg: string, shortMsg: string, minZoom?: number) => IKakaoTilesetCopyright;
-  StaticMap: new (container: HTMLElement, options?: IKakaoStaticMapOptions) => IKakaoStaticMap;
+  Tileset: new (
+    width: number,
+    height: number,
+    urlFunc: (x: number, y: number, z: number) => string,
+    copyright?: IKakaoTilesetCopyright[],
+    dark?: boolean,
+    minZoom?: number,
+    maxZoom?: number,
+    getTile?: (x: number, y: number, z: number) => string
+  ) => IKakaoTileset;
+  TilesetCopyright: new (
+    msg: string,
+    shortMsg: string,
+    minZoom?: number
+  ) => IKakaoTilesetCopyright;
+  StaticMap: new (
+    container: HTMLElement,
+    options?: IKakaoStaticMapOptions
+  ) => IKakaoStaticMap;
   Map: new (container: HTMLElement, options?: IKakaoMapOptions) => IKakaoMap;
-  Roadview: new (container: HTMLElement, options?: IKakaoRoadviewOptions) => IKakaoRoadview;
+  Roadview: new (
+    container: HTMLElement,
+    options?: IKakaoRoadviewOptions
+  ) => IKakaoRoadview;
   RoadviewClient: new () => IKakaoRoadviewClient;
   RoadviewOverlay: new () => IKakaoRoadviewOverlay;
   Marker: new (options?: IKakaoMarkerOptions) => IKakaoMarker;
-  MarkerImage: new (src: string, size: IKakaoSize, options?: IKakaoMarkerImageOptions) => IKakaoMarkerImage;
+  MarkerImage: new (
+    src: string,
+    size: IKakaoSize,
+    options?: IKakaoMarkerImageOptions
+  ) => IKakaoMarkerImage;
   InfoWindow: new (options?: IKakaoInfoWindowOptions) => IKakaoInfoWindow;
-  CustomOverlay: new (options?: IKakaoCustomOverlayOptions) => IKakaoCustomOverlay;
+  CustomOverlay: new (
+    options?: IKakaoCustomOverlayOptions
+  ) => IKakaoCustomOverlay;
   AbstractOverlay: new () => IKakaoAbstractOverlay;
   Polyline: new (options?: IKakaoPolylineOptions) => IKakaoPolyline;
   Polygon: new (options?: IKakaoPolygonOptions) => IKakaoPolygon;
   Circle: new (options?: IKakaoCircleOptions) => IKakaoCircle;
   Rectangle: new (options?: IKakaoRectangleOptions) => IKakaoRectangle;
   Ellipse: new (options?: IKakaoEllipseOptions) => IKakaoEllipse;
-  // MarkerClusterer: new (options?: ) => IKakaoEllipse;
+  MarkerClusterer: new (
+    options?: IKakaoMarkerClustererOptions
+  ) => IKakaoMarkerClusterer;
   event: IKakaoEvent;
   drawing: IKakaoDrawing;
   services: IKakaoServices;
   MapTypeId: IKakaoMapTypeId;
   ControlPosition: IKakaoControlPosition;
   CopyrightPosition: IKakaoCopyrightPosition;
+}
+
+export interface IKakaoMarkerClustererOptions {
+  map: IKakaoMap;
+  markers: IKakaoMarker[];
+  gridSize: number;
+  averageCenter: false;
+  minLevel: number;
+  disableClickZoom: false;
+  styles: IKakaoMarkerClustererStyle[];
+}
+export interface IKakaoMarkerClustererStyle {
+  width?: string;
+  height?: string;
+  background?: string;
+  color?: string;
+  textAlign?: string;
+  lineHeight?: string;
+}
+
+export interface IKakaoMarkerClusterer {
+  addMarker: (marker: IKakaoMarker, nodraw?: boolean) => void;
+  removeMarker: (marker: IKakaoMarker, nodraw?: boolean) => void;
+  addMarkers: (markers: IKakaoMarker[], nodraw?: boolean) => void;
+  removeMarkers: (markers: IKakaoMarker[], nodraw?: boolean) => void;
+  clear: () => void;
+  redraw: () => void;
+  setGridSize: (size: number) => void;
+  setMinClusterSize: (size: number) => void;
 }
 
 export interface IMapProjection {
@@ -76,7 +137,6 @@ export interface IKakaoServicesGeocoder {
     /** 변환할 주소명 */
     addr: string,
 
-
     callback: (
       /** 결과 상세는 {@link https://developers.kakao.com/docs/latest/ko/local/dev-guide#address-coord 로컬 REST API 주소 검색}의 응답결과 참고 */
       result: any[],
@@ -85,15 +145,15 @@ export interface IKakaoServicesGeocoder {
       status: any,
 
       /** {@link http://apis.map.kakao.com/web/documentation/#Pagination kakao.maps.services.Pagenation}의 인스턴스 */
-      pagination: IKakaoServicesPagination,
+      pagination: IKakaoServicesPagination
     ) => void,
 
     options?: {
       /** 검색할 페이지. 기본값은 1 */
-      page?: number,
+      page?: number;
 
       /** 검색할 페이지. 기본값은 10, 1~30 까지 가능 */
-      size?: number,
+      size?: number;
     }
   ) => void;
 
@@ -109,12 +169,12 @@ export interface IKakaoServicesGeocoder {
       result: any[],
 
       /** {@link http://apis.map.kakao.com/web/documentation/#services_Status kakao.maps.services.Status}와 비교하여 사용 */
-      status: any,
+      status: any
     ) => void,
 
     options?: {
       /** 입력 좌표 체계. 기본값은 WGS84 */
-      input_coord: IKakaoCoords,
+      input_coord: IKakaoCoords;
     }
   ) => void;
 
@@ -130,15 +190,15 @@ export interface IKakaoServicesGeocoder {
       result: any[],
 
       /** {@link http://apis.map.kakao.com/web/documentation/#services_Status kakao.maps.services.Status}와 비교하여 사용 */
-      status: any,
+      status: any
     ) => void,
 
     options?: {
       /** 입력 좌표 체계. 기본값은 WGS84 */
-      input_coord?: IKakaoCoords,
+      input_coord?: IKakaoCoords;
 
       /** 출력 좌표 체계. 기본값은 WGS84 */
-      output_coord?: IKakaoCoords,
+      output_coord?: IKakaoCoords;
     }
   ) => void;
 
@@ -155,15 +215,15 @@ export interface IKakaoServicesGeocoder {
       result: any[],
 
       /** {@link http://apis.map.kakao.com/web/documentation/#services_Status kakao.maps.services.Status}와 비교하여 사용 */
-      status: any,
+      status: any
     ) => void,
 
     options?: {
       /** 입력 좌표 체계. 기본값은 WGS84 */
-      input_coord?: IKakaoCoords,
+      input_coord?: IKakaoCoords;
 
       /** 출력 좌표 체계. 기본값은 WGS84 */
-      output_coord?: IKakaoCoords,
+      output_coord?: IKakaoCoords;
     }
   ) => void;
 }
@@ -247,45 +307,45 @@ export interface IKakaoServicesPlaces {
       status: any,
 
       /** {@link http://apis.map.kakao.com/web/documentation/#Pagination kakao.maps.services.Pagenation}의 인스턴스 */
-      pagination: IKakaoServicesPagination,
+      pagination: IKakaoServicesPagination
     ) => void,
 
     options?: {
       /** 키워드 필터링을 위한 카테고리 코드 */
-      category_group_code?: string,
+      category_group_code?: string;
 
       /** 중심 좌표. 특정 지역을 기준으로 검색한다. */
-      location?: IKakaoLatLng,
+      location?: IKakaoLatLng;
 
       /** x 좌표, longitude, location 값이 있으면 무시된다. */
-      x?: number,
+      x?: number;
 
       /** y 좌표, latitude, location 값이 있으면 무시된다. */
-      y?: number,
+      y?: number;
 
       /** 중심 좌표로부터의 거리(반경) 필터링 값. location / x , y / useMapCenter 중 하나와 같이 써야 의미가 있음. 미터(m) 단위. 기본값은 5000, 0~20000까지 가능 */
-      radius?: number,
+      radius?: number;
 
       /** 검색할 사각형 영역 */
-      bounds?: IKakaoLatLngBounds,
+      bounds?: IKakaoLatLngBounds;
 
       /** 사각 영역. 좌x,좌y,우x,우y 형태를 가짐. bounds 값이 있으면 무시된다. */
-      rect?: string,
+      rect?: string;
 
       /** 한 페이지에 보여질 목록 개수. 기본값은 15, 1~15까지 가능 */
-      size?: number,
+      size?: number;
 
       /** 검색할 페이지. 기본값은 1, size 값에 따라 1~45까지 가능 */
-      page?: number,
+      page?: number;
 
       /** 정렬 옵션. DISTANCE 일 경우 지정한 좌표값에 기반하여 동작함. 기본값은 ACCURACY (정확도 순), kakao.maps.services.SortBy 참조 */
-      sort?: any,
+      sort?: any;
 
       /** 지정한 Map 객체의 중심 좌표를 사용할지의 여부. 참일 경우, location 속성은 무시된다. 기본값은 false */
-      useMapCenter?: boolean,
+      useMapCenter?: boolean;
 
       /** 지정한 Map 객체의 영역을 사용할지의 여부. 참일 경우, bounds 속성은 무시된다. 기본값은 false) => void; */
-      useMapBounds?: boolean,
+      useMapBounds?: boolean;
     }
   ) => void;
 
@@ -300,50 +360,52 @@ export interface IKakaoServicesPlaces {
       status: any,
 
       /** {@link http://apis.map.kakao.com/web/documentation/#Pagination kakao.maps.services.Pagenation}의 인스턴스 */
-      pagination: IKakaoServicesPagination,
+      pagination: IKakaoServicesPagination
     ) => void,
 
     options?: {
       /** 중심 좌표. 특정 지역을 기준으로 검색한다. 카테고리 검색에서는 필수. */
-      location?: IKakaoLatLng,
+      location?: IKakaoLatLng;
 
       /** x 좌표, longitude, location 값이 있으면 무시된다. */
-      x?: number,
+      x?: number;
 
       /** y 좌표, latitude, location 값이 있으면 무시된다. */
-      y?: number,
+      y?: number;
 
       /** 중심 좌표로부터의 거리(반경) 필터링 값. location / x , y / useMapCenter 중 하나와 같이 써야 의미가 있음. 미터(m) 단위. 기본값은 5000, 0~20000까지 가능 */
-      radius?: number,
+      radius?: number;
 
       /** 검색할 사각형 영역 */
-      bounds?: IKakaoLatLngBounds,
+      bounds?: IKakaoLatLngBounds;
 
       /** 사각 영역. 좌x,좌y,우x,우y 형태를 가짐. bounds 값이 있으면 무시된다. */
-      rect?: string,
+      rect?: string;
 
       /** 한 페이지에 보여질 목록 개수. 기본값은 15, 1~15까지 가능 */
-      size?: number,
+      size?: number;
 
       /** 검색할 페이지. 기본값은 1, size 값에 따라 1~45까지 가능 */
-      page?: number,
+      page?: number;
 
       /** 정렬 옵션. DISTANCE 일 경우 지정한 좌표값에 기반하여 동작함. 기본값은 ACCURACY (정확도 순), kakao.maps.services.SortBy 참조 */
-      sort?: any,
+      sort?: any;
 
       /** 지정한 Map 객체의 중심 좌표를 사용할지의 여부. 참일 경우, location 속성은 무시된다. 기본값은 false */
-      useMapCenter?: boolean,
+      useMapCenter?: boolean;
 
       /** 지정한 Map 객체의 영역을 사용할지의 여부. 참일 경우, bounds 속성은 무시된다. 기본값은 false */
-      useMapBounds?: boolean,
-    },
+      useMapBounds?: boolean;
+    }
   ) => void;
 }
 
 export interface IKakaoDrawing {
   OverlayType: IKakaoDrawingOverayType;
   Toolbox: new (options: IKakaoDrawingToolboxOptions) => IKakaoDrawingToolbox;
-  DrawingManager: new (options?: IDrawingManagerOptions) => IKakaoDrawingManager;
+  DrawingManager: new (
+    options?: IDrawingManagerOptions
+  ) => IKakaoDrawingManager;
 }
 
 export interface IKakaoDrawingToolboxOptions {
@@ -369,7 +431,7 @@ export interface IDrawingManagerOptions {
   guideTooltip?: string[];
 
   /** 사용할 그리기 요소 지정한다 (기본값: 모든 그리기 요소) */
-  drawingMode?: (IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType])[];
+  drawingMode?: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType][];
 
   /** 마커 그리기 옵션 */
   markerOptions?: {
@@ -625,7 +687,11 @@ export interface IDrawingPolygonOptions {
  * {@link http://apis.map.kakao.com/web/sample/drawingGetData drawing Library에서 데이터 얻기 샘플보기}
  */
 export interface IKakaoDrawingManager {
-  setStyle: (type: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType], props: string, value: string | number) => void;
+  setStyle: (
+    type: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType],
+    props: string,
+    value: string | number
+  ) => void;
   setStrokeWeight: (strokeWeight: number) => void;
 
   /** format: #xxxxxx */
@@ -638,7 +704,10 @@ export interface IKakaoDrawingManager {
    *
    * 인덱스 값은 0 부터 시작한다.
    */
-  select: (type: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType], index?: number) => void;
+  select: (
+    type: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType],
+    index?: number
+  ) => void;
   cancel: () => void;
 
   /**
@@ -670,14 +739,18 @@ export interface IKakaoDrawingManager {
    *
    * {@link http://apis.map.kakao.com/web/sample/drawingGetData drawing Library에서 데이터 얻기 샘플보기}
    */
-  getData: (types?: (IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType])[]) => { [shape: string]: any }
+  getData: (
+    types?: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType][]
+  ) => { [shape: string]: any };
 
   /**
    * 지도에 그려진 요소들 중 선택한 요소의 객체를 반환한다.
    *
    * 요소를 지정하지 않으면 그려진 모든 요소의 객체를 반환한다.
    */
-  getOverlays: (types?: (IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType])[]) => { [shape: string]: any }
+  getOverlays: (
+    types?: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType][]
+  ) => { [shape: string]: any };
 
   /**
    * overlayType OverlayType : 그리기 관리자에 추가할 오버레이 타입
@@ -686,21 +759,56 @@ export interface IKakaoDrawingManager {
    *
    * param2 : 추가할 그리기 요소가 마커인경우 사용할 마커 이미지의 인덱스를, 원인 경우 원의 반지름을 파라미터로 받는다.
    */
-  put: (overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType], param1: IKakaoLatLng | IKakaoLatLngBounds | IKakaoLatLng[] | IKakaoLatLng[][], param2?: number) => void;
+  put: (
+    overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType],
+    param1:
+      | IKakaoLatLng
+      | IKakaoLatLngBounds
+      | IKakaoLatLng[]
+      | IKakaoLatLng[][],
+    param2?: number
+  ) => void;
 
   /** overlay : 그리기 관리자에서 생성한 확장 오버레이 객체 */
   remove: (overlay: any) => void;
 
-  addListener(type: "select", callback: (e: { overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType] }) => void): void;
-  addListener(type: "drawstart", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
-  addListener(type: "draw", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
-  addListener(type: "drawend", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
+  addListener(
+    type: "select",
+    callback: (e: {
+      overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType];
+    }) => void
+  ): void;
+  addListener(
+    type: "drawstart",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
+  addListener(
+    type: "draw",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
+  addListener(
+    type: "drawend",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
 
   /** 다음 단계 그리기를 하면 발생한다. (Polyline, Polygon, Arrow 한정) */
-  addListener(type: "drawnext", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
+  addListener(
+    type: "drawnext",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
 
-  addListener(type: "cancel", callback: (e: { overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType] }) => void): void;
-  addListener(type: "remove", callback: (e: { overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType] }) => void): void;
+  addListener(
+    type: "cancel",
+    callback: (e: {
+      overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType];
+    }) => void
+  ): void;
+  addListener(
+    type: "remove",
+    callback: (e: {
+      overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType];
+    }) => void
+  ): void;
 
   /**
    * 그리기 요소들의 상태가 변경되면 발생한다.
@@ -709,13 +817,40 @@ export interface IKakaoDrawingManager {
    */
   addListener(type: "state_changed", callback: () => void): void;
 
-  removeListener(type: "select", callback: (e: { overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType] }) => void): void;
-  removeListener(type: "drawstart", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
-  removeListener(type: "draw", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
-  removeListener(type: "drawend", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
-  removeListener(type: "drawnext", callback: (mouseEvent: IKakaoDrawingMouseEvent) => void): void;
-  removeListener(type: "cancel", callback: (e: { overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType] }) => void): void;
-  removeListener(type: "remove", callback: (e: { overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType] }) => void): void;
+  removeListener(
+    type: "select",
+    callback: (e: {
+      overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType];
+    }) => void
+  ): void;
+  removeListener(
+    type: "drawstart",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
+  removeListener(
+    type: "draw",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
+  removeListener(
+    type: "drawend",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
+  removeListener(
+    type: "drawnext",
+    callback: (mouseEvent: IKakaoDrawingMouseEvent) => void
+  ): void;
+  removeListener(
+    type: "cancel",
+    callback: (e: {
+      overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType];
+    }) => void
+  ): void;
+  removeListener(
+    type: "remove",
+    callback: (e: {
+      overlayType: IKakaoDrawingOverayType[keyof IKakaoDrawingOverayType];
+    }) => void
+  ): void;
   removeListener(type: "state_changed", callback: () => void): void;
 }
 
@@ -756,8 +891,8 @@ export interface IKakaoLatLng {
 }
 
 export interface IKakaoLatLngBoundsConstructor {
-  new(): IKakaoLatLngBounds;
-  new(sw: IKakaoLatLng, ne: IKakaoLatLng): IKakaoLatLngBounds;
+  new (): IKakaoLatLngBounds;
+  new (sw: IKakaoLatLng, ne: IKakaoLatLng): IKakaoLatLngBounds;
 }
 
 export interface IKakaoLatLngBounds {
@@ -789,8 +924,24 @@ export interface IKakaoSize {
 }
 
 export interface IKakaoEvent {
-  addListener<Target extends TKakaoEventTarget, Type extends TKakaoEventType<Target>, Handler extends TKakaoEventHandler<Target, Type>>(target: Target, type: Type, handler: Handler): void;
-  removeListener<Target extends TKakaoEventTarget, Type extends TKakaoEventType<Target>, Handler extends TKakaoEventHandler<Target, Type>>(target: Target, type: Type, handler: Handler): void;
+  addListener<
+    Target extends TKakaoEventTarget,
+    Type extends TKakaoEventType<Target>,
+    Handler extends TKakaoEventHandler<Target, Type>
+  >(
+    target: Target,
+    type: Type,
+    handler: Handler
+  ): void;
+  removeListener<
+    Target extends TKakaoEventTarget,
+    Type extends TKakaoEventType<Target>,
+    Handler extends TKakaoEventHandler<Target, Type>
+  >(
+    target: Target,
+    type: Type,
+    handler: Handler
+  ): void;
 
   trigger: (target: any, type: any, data: any) => void;
   preventMap: () => void;
@@ -802,45 +953,122 @@ export interface IKakaoMouseEvent {
   coords: IKakaoCoords;
 }
 
-export type TKakaoEventTarget = IKakaoMap | IKakaoRoadview | IKakaoMarker | IKakaoPolyline | IKakaoPolygon | IKakaoCircle | IKakaoEllipse | IKakaoRectangle;
+export type TKakaoEventTarget =
+  | IKakaoMap
+  | IKakaoRoadview
+  | IKakaoMarker
+  | IKakaoPolyline
+  | IKakaoPolygon
+  | IKakaoCircle
+  | IKakaoEllipse
+  | IKakaoRectangle;
 
-export type TKakaoEventType<Target extends TKakaoEventTarget> =
-  Target extends IKakaoMap ? "zoom_start" | "zoom_changed" | "bounds_changed" | "idle" | "tilesloaded" | "maptypeid_changed" | "click" | "dbclick" | "rightclick" | "mousemove" | "dragstart" | "drag" | "dragend" :
-  Target extends IKakaoRoadview ? "init" | "panoid_changed" | "viewpoint_changed" | "position_changed" :
-  Target extends IKakaoMarker ? "click" | "mouseover" | "mouseout" | "rightclick" | "dragstart" | "dragend" :
-  Target extends IKakaoPolyline ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" :
-  Target extends IKakaoPolygon ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" :
-  Target extends IKakaoCircle ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" :
-  Target extends IKakaoEllipse ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" :
-  Target extends IKakaoRectangle ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" : never;
+export type TKakaoEventType<
+  Target extends TKakaoEventTarget
+> = Target extends IKakaoMap
+  ?
+      | "zoom_start"
+      | "zoom_changed"
+      | "bounds_changed"
+      | "idle"
+      | "tilesloaded"
+      | "maptypeid_changed"
+      | "click"
+      | "dbclick"
+      | "rightclick"
+      | "mousemove"
+      | "dragstart"
+      | "drag"
+      | "dragend"
+  : Target extends IKakaoRoadview
+  ? "init" | "panoid_changed" | "viewpoint_changed" | "position_changed"
+  : Target extends IKakaoMarker
+  ? "click" | "mouseover" | "mouseout" | "rightclick" | "dragstart" | "dragend"
+  : Target extends IKakaoPolyline
+  ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+  : Target extends IKakaoPolygon
+  ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+  : Target extends IKakaoCircle
+  ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+  : Target extends IKakaoEllipse
+  ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+  : Target extends IKakaoRectangle
+  ? "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+  : never;
 
-export type TKakaoEventHandler<Target extends TKakaoEventTarget, Type extends TKakaoEventType<Target>> =
-  Target extends IKakaoMap ?
-  Type extends "zoom_start" | "zoom_changed" | "bounds_changed" | "idle" | "tilesloaded" | "maptypeid_changed" ? (() => void) :
-  Type extends "click" | "rightclick" | "dbclick" | "mousemove" | "dragstart" | "drag" | "dragend" ? ((e: IKakaoMouseEvent) => void) : never :
-  Target extends IKakaoRoadview ?
-  Type extends "init" | "panoid_changed" | "viewpoint_changed" | "position_changed" ? (() => void) : never :
-  Target extends IKakaoMarker ?
-  Type extends "click" | "mouseover" | "mouseout" | "dragstart" | "dragend" | "rightclick" ? ((e: IKakaoMouseEvent) => void) : never :
-  Target extends IKakaoPolyline ?
-  Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" ? ((e: IKakaoMouseEvent) => void) : never :
-  Target extends IKakaoPolygon ?
-  Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" ? ((e: IKakaoMouseEvent) => void) : never :
-  Target extends IKakaoCircle ?
-  Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" ? ((e: IKakaoMouseEvent) => void) : never :
-  Target extends IKakaoEllipse ?
-  Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" ? ((e: IKakaoMouseEvent) => void) : never :
-  Target extends IKakaoRectangle ?
-  Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click" ? ((e: IKakaoMouseEvent) => void) : never : never;
+export type TKakaoEventHandler<
+  Target extends TKakaoEventTarget,
+  Type extends TKakaoEventType<Target>
+> = Target extends IKakaoMap
+  ? Type extends
+      | "zoom_start"
+      | "zoom_changed"
+      | "bounds_changed"
+      | "idle"
+      | "tilesloaded"
+      | "maptypeid_changed"
+    ? () => void
+    : Type extends
+        | "click"
+        | "rightclick"
+        | "dbclick"
+        | "mousemove"
+        | "dragstart"
+        | "drag"
+        | "dragend"
+    ? (e: IKakaoMouseEvent) => void
+    : never
+  : Target extends IKakaoRoadview
+  ? Type extends
+      | "init"
+      | "panoid_changed"
+      | "viewpoint_changed"
+      | "position_changed"
+    ? () => void
+    : never
+  : Target extends IKakaoMarker
+  ? Type extends
+      | "click"
+      | "mouseover"
+      | "mouseout"
+      | "dragstart"
+      | "dragend"
+      | "rightclick"
+    ? (e: IKakaoMouseEvent) => void
+    : never
+  : Target extends IKakaoPolyline
+  ? Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+    ? (e: IKakaoMouseEvent) => void
+    : never
+  : Target extends IKakaoPolygon
+  ? Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+    ? (e: IKakaoMouseEvent) => void
+    : never
+  : Target extends IKakaoCircle
+  ? Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+    ? (e: IKakaoMouseEvent) => void
+    : never
+  : Target extends IKakaoEllipse
+  ? Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+    ? (e: IKakaoMouseEvent) => void
+    : never
+  : Target extends IKakaoRectangle
+  ? Type extends "mouseover" | "mouseout" | "mousemove" | "mousedown" | "click"
+    ? (e: IKakaoMouseEvent) => void
+    : never
+  : never;
 
-export interface IKakaoMapTypeControl { }
+export interface IKakaoMapTypeControl {}
 
-export interface IKakaoMapZoomControl { }
+export interface IKakaoMapZoomControl {}
 
-export interface IKakaoTilesetCopyright { }
+export interface IKakaoTilesetCopyright {}
 
 export interface IKakaoInfoWindow {
-  open: (map_or_roadview: IKakaoMap | IKakaoRoadview, marker?: IKakaoMarker) => void;
+  open: (
+    map_or_roadview: IKakaoMap | IKakaoRoadview,
+    marker?: IKakaoMarker
+  ) => void;
   close: () => void;
   getMap: () => IKakaoMap | IKakaoRoadview;
   setPosition: (position: IKakaoLatLng | IKakaoViewpoint) => void;
@@ -941,7 +1169,9 @@ export interface IKakaoOverayMapTypeId {
 export type TKakaoOverayMapTypeIdKey = keyof IKakaoOverayMapTypeId;
 export type TKakaoOverayMapTypeIdValue = IKakaoOverayMapTypeId[keyof IKakaoOverayMapTypeId];
 
-export interface IKakaoMapTypeId extends IKakaoBaseMapTypeId, IKakaoOverayMapTypeId { }
+export interface IKakaoMapTypeId
+  extends IKakaoBaseMapTypeId,
+    IKakaoOverayMapTypeId {}
 export type TKakaoMapTypeIdValue = IKakaoMapTypeId[keyof IKakaoMapTypeId];
 export type TKakaoMapTypeIdKey = keyof IKakaoMapTypeId;
 
@@ -952,14 +1182,31 @@ export interface IKakaoCopyrightPosition {
 
 export type TKakaoCopyrightPosition = IKakaoCopyrightPosition[keyof IKakaoCopyrightPosition];
 
-export type TKakaoStrokeStyles = "solid" | "shortdash" | "shortdot" | "shortdashdot" | "shortdashdotdot" | "dot" | "dash" | "dashdot" | "longdash" | "longdashdot" | "longdashdotdot";
+export type TKakaoStrokeStyles =
+  | "solid"
+  | "shortdash"
+  | "shortdot"
+  | "shortdashdot"
+  | "shortdashdotdot"
+  | "dot"
+  | "dash"
+  | "dashdot"
+  | "longdash"
+  | "longdashdot"
+  | "longdashdotdot";
 
-export interface IKakaoTileset { }
+export interface IKakaoTileset {}
 
 export interface IKakaoStaticMap {
   setCenter: (latlng: IKakaoLatLng) => void;
   getCenter: () => IKakaoLatLng;
-  setLevel: (level: number, options?: { animate?: boolean | { duration?: number }, anchor?: IKakaoLatLng }) => void;
+  setLevel: (
+    level: number,
+    options?: {
+      animate?: boolean | { duration?: number };
+      anchor?: IKakaoLatLng;
+    }
+  ) => void;
   getLevel: () => number;
   setMapTypeId: (mapTypeId: TKakaoMapTypeIdValue) => void;
   getMapTypeId: () => TKakaoMapTypeIdValue;
@@ -969,23 +1216,43 @@ export interface IKakaoStaticMapOptions {
   center?: IKakaoLatLng;
   level?: number;
   mapTypeId?: IKakaoMapTypeId;
-  marker?: { position: IKakaoLatLng, text?: string } | { position: IKakaoLatLng, text?: string }[];
+  marker?:
+    | { position: IKakaoLatLng; text?: string }
+    | { position: IKakaoLatLng; text?: string }[];
 }
 
 export interface IKakaoMap {
   setCenter: (latlng: IKakaoLatLng) => void;
   getCenter: () => IKakaoLatLng;
-  setLevel: (level: number, options?: { animate?: boolean | { duration?: number }, anchor?: IKakaoLatLng }) => void;
+  setLevel: (
+    level: number,
+    options?: {
+      animate?: boolean | { duration?: number };
+      anchor?: IKakaoLatLng;
+    }
+  ) => void;
   getLevel: () => number;
   setMapTypeId: (mapTypeId: TKakaoBaseMapTypeIdValue) => void;
   getMapTypeId: () => TKakaoBaseMapTypeIdValue;
-  setBounds: (bounds: IKakaoLatLngBounds, paddingTop?: number, paddingRight?: number, paddingBottom?: number, paddingLeft?: number) => void;
+  setBounds: (
+    bounds: IKakaoLatLngBounds,
+    paddingTop?: number,
+    paddingRight?: number,
+    paddingBottom?: number,
+    paddingLeft?: number
+  ) => void;
   getBounds: () => IKakaoLatLngBounds;
   setMinLevel: (minLevel: number) => void;
   setMaxLevel: (maxLevel: number) => void;
   panBy: (dx: number, dy: number) => void;
-  panTo: (latlng_or_bounds: IKakaoLatLng | IKakaoLatLngBounds, padding?: number) => void;
-  addControl: (control: Element | IKakaoMapTypeControl | IKakaoMapZoomControl, position?: IKakaoControlPosition[keyof IKakaoControlPosition]) => void;
+  panTo: (
+    latlng_or_bounds: IKakaoLatLng | IKakaoLatLngBounds,
+    padding?: number
+  ) => void;
+  addControl: (
+    control: Element | IKakaoMapTypeControl | IKakaoMapZoomControl,
+    position?: IKakaoControlPosition[keyof IKakaoControlPosition]
+  ) => void;
   removeControl: (control: IKakaoMapTypeControl | IKakaoMapZoomControl) => void;
   setDraggable: (draggable: boolean) => void;
   getDraggable: () => boolean;
@@ -996,7 +1263,10 @@ export interface IKakaoMap {
   removeOverlayMapTypeId: (mapTypeId: TKakaoOverayMapTypeIdValue) => void;
   setKeyboardShortcuts: (active: boolean) => void;
   getKeyboardShortcuts: () => boolean;
-  setCopyrightPosition: (copyrightPosition: TKakaoCopyrightPosition, reversed?: boolean) => void;
+  setCopyrightPosition: (
+    copyrightPosition: TKakaoCopyrightPosition,
+    reversed?: boolean
+  ) => void;
   setCursor: (style: string) => void;
   getProjection: () => IKakaoMapProjection;
 }
@@ -1033,7 +1303,11 @@ export interface IKakaoRoadviewOptions {
 }
 
 export interface IKakaoRoadviewClient {
-  getNearestPanoId: (position: IKakaoLatLng, radius: number, callback: (panoId: number | null) => void) => void;
+  getNearestPanoId: (
+    position: IKakaoLatLng,
+    radius: number,
+    callback: (panoId: number | null) => void
+  ) => void;
 }
 
 export interface IKakaoRoadviewOverlay {
@@ -1079,7 +1353,7 @@ export interface IKakaoMarkerOptions {
   range?: number;
 }
 
-export interface IKakaoMarkerImage { }
+export interface IKakaoMarkerImage {}
 
 export interface IKakaoMarkerImageOptions {
   alt?: string;
@@ -1166,28 +1440,13 @@ export interface IKakaoEllipse {
   setPosition: (position: IKakaoLatLng) => void;
   getPosition: () => IKakaoLatLng;
   setRadius: (rx: number, ry: number) => void;
-  getRadius: () => { rx: number, ry: number };
+  getRadius: () => { rx: number; ry: number };
   getRadiusX: () => number;
   getRadiusY: () => number;
   getBounds: () => IKakaoLatLngBounds;
   setZIndex: (zIndex: number) => void;
   getZIndex: () => number;
 }
-
-// export interface IKakaoMarkerClustererOptions {
-//   map: IKakaoMap | IKakaoRoadview;
-//   markers: number;
-//   gridSize?: number;
-//   averageCenter?: number;
-//   minLevel?: number;
-//   minClusterSize?: number;
-//   styles?: String[];
-//   texts?: String[];
-//   calculator?: number[];
-//   disableClickZoom?: boolean;
-//   clickable?: boolean;
-//   hoverable?: boolean;
-// }
 
 export interface IKakaoEllipseOptions {
   center?: IKakaoLatLng;
@@ -1206,7 +1465,7 @@ export interface IKakaoRectangle {
   setMap: (map: IKakaoMap | IKakaoRoadview | null) => void;
   getMap: () => IKakaoMap | IKakaoRoadview | null;
   setOptions: (options: IKakaoRectangleOptions) => void;
-  setBounds: (bounds: IKakaoLatLngBounds) => void
+  setBounds: (bounds: IKakaoLatLngBounds) => void;
   getBounds: () => IKakaoLatLngBounds;
   setZIndex: (zIndex: number) => void;
   getZIndex: () => number;
